@@ -55,7 +55,7 @@ namespace Core.Nhibernate.IntegrationTests.Stores
 
         protected BaseStoreTests()
         {
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+            //HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
             NhSessionFactory = GetNHibernateSessionFactory();
 
             _nhibernateAuxSession = NhSessionFactory.OpenSession();
