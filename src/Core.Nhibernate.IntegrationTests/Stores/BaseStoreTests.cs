@@ -78,7 +78,7 @@ namespace Core.Nhibernate.IntegrationTests.Stores
                 .ExposeConfiguration(cfg =>
                 {
                     SchemaMetadataUpdater.QuoteTableAndColumns(cfg);
-                    //BuildSchema(cfg);
+                    BuildSchema(cfg);
                 })
                 .BuildSessionFactory();
 
