@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>IdentityServer3.Contrib.Nhibernate</id>
+        <version>0.0.0</version>
+        <authors>Ricardo Santos and contributors</authors>
+        <licenseUrl>https://github.com/rms81/IdentityServer3.Contrib.Nhibernate/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/rms81/IdentityServer3.Contrib.Nhibernate</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Nhibernate-based persistence layer for IdentityServer3</description>
+        <summary>Nhibernate-based persistence layer for IdentityServer3</summary>
+        <releaseNotes />
+        <copyright>Copyright 2016</copyright>
+        <language />
+        <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity Nhibernate</tags>
+        <dependencies>
+            <dependency id="IdentityServer3" version="2.5.0" />
+            <dependency id="AutoMapper" version="4.2.0" />
+            <dependency id="NHibernate" version="4.0.0.4000" />
+            <dependency id="Newtonsoft.Json" version="7.0.1" />
+            <dependency id="FluentNHibernate" version="2.0.1" />
+        </dependencies>
+    </metadata>
+</package>
