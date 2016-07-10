@@ -248,3 +248,4 @@ ModelManifest.xml
 # Exclude test certificate
 !*idsrv3test.pfx
 
+src/Core.Nhibernate.IntegrationTests/connectionString.config
