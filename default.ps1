@@ -20,7 +20,7 @@ properties {
 
 
 task default -depends Clean, CreateNuGetPackage
-task appVeyor -depends Clean, CreateNuGetPackage
+task appVeyor -depends Clean,RunIntegraionTests, CreateNuGetPackage
 
 task Clean {
 	rmdir $output_directory -ea SilentlyContinue -recurse
@@ -55,7 +55,7 @@ task UpdateVersion {
 	"[assembly: AssemblyFileVersion(""$assemblyFileVersion"")]" >> $versionAssemblyInfoFile
 }
 
-task RunTests -depends Compile {
+task RunIntegraionTests -depends Compile {
 	$project = "Core.Nhibernate.IntegrationTests"
 	mkdir $output_directory\xunit\$project -ea SilentlyContinue
 	.$xunit_path "$src_directory\Core.Nhibernate.IntegrationTests\bin\$target_config\$project.dll"
