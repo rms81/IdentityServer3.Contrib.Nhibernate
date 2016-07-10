@@ -20,7 +20,7 @@ properties {
 
 
 task default -depends Clean, CreateNuGetPackage
-task appVeyor -depends Clean,RunIntegraionTests, CreateNuGetPackage
+task appVeyor -depends Clean, RunIntegraionTests, CreateNuGetPackage
 
 task Clean {
 	rmdir $output_directory -ea SilentlyContinue -recurse
@@ -59,7 +59,7 @@ task CopyConfigFile {
 	copy-item $src_directory\Core.Nhibernate.IntegrationTests\bin\$target_config\connectionstring.appveyor.config $src_directory\Core.Nhibernate.IntegrationTests\bin\$target_config\connectionstring.config -Force
 }
 
-task RunIntegraionTests -depends Compile,CopyConfigFile {
+task RunIntegraionTests -depends Compile, CopyConfigFile {
 	$project = "Core.Nhibernate.IntegrationTests"
 	mkdir $output_directory\xunit\$project -ea SilentlyContinue
 	.$xunit_path "$src_directory\Core.Nhibernate.IntegrationTests\bin\$target_config\$project.dll"
