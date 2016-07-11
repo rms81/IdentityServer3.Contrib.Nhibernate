@@ -20,7 +20,7 @@ properties {
 
 
 task default -depends Clean, CreateNuGetPackage
-task appVeyor -depends Clean, RunIntegraionTests, CreateNuGetPackage
+task appVeyor -depends Clean, CreateNuGetPackage
 
 task Clean {
 	rmdir $output_directory -ea SilentlyContinue -recurse
