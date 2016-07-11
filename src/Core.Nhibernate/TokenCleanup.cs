@@ -76,7 +76,8 @@ namespace IdentityServer3.Contrib.Nhibernate
             {
                 Logger.Info("Clearing tokens");
 
-                _session.CreateQuery($"DELETE {nameof(Token)} t WHERE t.{nameof(Token.Expiry)} < {DateTimeOffset.UtcNow}")
+                _session.CreateQuery($"DELETE {nameof(Token)} t WHERE t.{nameof(Token.Expiry)} < :refDate")
+                    .SetParameter("refDate", DateTimeOffset.UtcNow)
                     .ExecuteUpdate();
 
                 await Task.FromResult(0);
