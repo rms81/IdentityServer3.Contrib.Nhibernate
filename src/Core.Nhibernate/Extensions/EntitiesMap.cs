@@ -21,11 +21,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
                     .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)))
                     .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
                 config.CreateMap<ScopeClaim, IdentityServer3.Core.Models.ScopeClaim>(MemberList.Destination);
-                config.CreateMap<ScopeSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination)
-                    .ForMember(dest => dest.Type, opt => opt.Condition(srs => !srs.IsSourceValueNull));
+                config.CreateMap<ScopeSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
 
-                config.CreateMap<ClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination)
-                    .ForMember(dest => dest.Type, opt => opt.Condition(srs => !srs.IsSourceValueNull));
+                config.CreateMap<ClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
                 config.CreateMap<Client, IdentityServer3.Core.Models.Client>(MemberList.Destination)
                     .ForMember(x => x.UpdateAccessTokenClaimsOnRefresh,
                         opt => opt.MapFrom(src => src.UpdateAccessTokenOnRefresh))
