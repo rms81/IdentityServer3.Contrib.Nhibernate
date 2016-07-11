@@ -14,11 +14,11 @@
         <language />
         <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity Nhibernate</tags>
         <dependencies>
-            <dependency id="IdentityServer3" version="2.5.0" />
-            <dependency id="AutoMapper" version="4.2.0" />
-            <dependency id="NHibernate" version="4.0.0.4000" />
-            <dependency id="Newtonsoft.Json" version="7.0.1" />
-            <dependency id="FluentNHibernate" version="2.0.1" />
+            <dependency id="IdentityServer3" version="2.5.1" />
+            <dependency id="AutoMapper" version="5.0.2" />
+            <dependency id="NHibernate" version="4.0.4.4000" />
+            <dependency id="Newtonsoft.Json" version="9.0.1" />
+            <dependency id="FluentNHibernate" version="2.0.3.0" />
         </dependencies>
     </metadata>
 </package>
