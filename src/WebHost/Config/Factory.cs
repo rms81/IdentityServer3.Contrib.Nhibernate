@@ -31,7 +31,7 @@ namespace WebHost.Config
             var nhSession = nhSessionFactory.OpenSession();
             var tokenCleanUpSession = nhSessionFactory.OpenSession();
 
-            var cleanup = new TokenCleanup(tokenCleanUpSession, 10);
+            var cleanup = new TokenCleanup(tokenCleanUpSession, 60);
             cleanup.Start();
 
             // these two calls just pre-populate the test DB from the in-memory config
