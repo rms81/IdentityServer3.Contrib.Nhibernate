@@ -19,11 +19,11 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual int Type { get; set; }
 
-        public virtual ISet<ScopeClaim> ScopeClaims { get; } = new HashSet<ScopeClaim>();
+        public virtual ISet<ScopeClaim> ScopeClaims { get; set; } = new HashSet<ScopeClaim>();
 
         public virtual bool IncludeAllClaimsForUser { get; set; }
 
-        public virtual ISet<ScopeSecret> ScopeSecrets { get; } = new HashSet<ScopeSecret>();
+        public virtual ISet<ScopeSecret> ScopeSecrets { get; set; } = new HashSet<ScopeSecret>();
 
         public virtual string ClaimsRule { get; set; }
 

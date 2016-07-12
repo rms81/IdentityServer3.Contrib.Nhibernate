@@ -10,7 +10,7 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual string ClientId { get; set; }
 
-        public virtual ISet<ClientSecret> ClientSecrets { get; } = new HashSet<ClientSecret>();
+        public virtual ISet<ClientSecret> ClientSecrets { get; set; } = new HashSet<ClientSecret>();
 
         public virtual string ClientName { get; set; }
 
@@ -28,7 +28,7 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual bool AllowClientCredentialsOnly { get; set; }
 
-        public virtual ISet<ClientRedirectUri> RedirectUris { get; } = new HashSet<ClientRedirectUri>();
+        public virtual ISet<ClientRedirectUri> RedirectUris { get; set; } = new HashSet<ClientRedirectUri>();
 
         public virtual ISet<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; } = new HashSet<ClientPostLogoutRedirectUri>();
 
@@ -40,7 +40,7 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual bool AllowAccessToAllScopes { get; set; }
 
-        public virtual ISet<ClientScope> AllowedScopes { get; } = new HashSet<ClientScope>();
+        public virtual ISet<ClientScope> AllowedScopes { get; set; } = new HashSet<ClientScope>();
 
         public virtual int IdentityTokenLifetime { get; set; }
 
@@ -62,11 +62,11 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual bool EnableLocalLogin { get; set; }
 
-        public virtual ISet<ClientIdPRestriction> IdentityProviderRestrictions { get; } = new HashSet<ClientIdPRestriction>();
+        public virtual ISet<ClientIdPRestriction> IdentityProviderRestrictions { get; set; } = new HashSet<ClientIdPRestriction>();
 
         public virtual bool IncludeJwtId { get; set; }
 
-        public virtual ISet<ClientClaim> Claims { get; } = new HashSet<ClientClaim>();
+        public virtual ISet<ClientClaim> Claims { get; set; } = new HashSet<ClientClaim>();
 
         public virtual bool AlwaysSendClientClaims { get; set; }
 
@@ -74,8 +74,8 @@ namespace IdentityServer3.Contrib.Nhibernate.Entities
 
         public virtual bool AllowAccessToAllGrantTypes { get; set; }
 
-        public virtual ISet<ClientCustomGrantType> AllowedCustomGrantTypes { get; } = new HashSet<ClientCustomGrantType>();
+        public virtual ISet<ClientCustomGrantType> AllowedCustomGrantTypes { get; set; } = new HashSet<ClientCustomGrantType>();
 
-        public virtual ISet<ClientCorsOrigin> AllowedCorsOrigins { get; } = new HashSet<ClientCorsOrigin>();
+        public virtual ISet<ClientCorsOrigin> AllowedCorsOrigins { get; set; } = new HashSet<ClientCorsOrigin>();
     }
 }

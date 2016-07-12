@@ -22,10 +22,13 @@ namespace IdentityServer3.Core.Models
                     .ForSourceMember(x => x.Claims, opts => opts.Ignore())
                     .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)))
                     .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
+
                 config.CreateMap<Models.ScopeClaim, Contrib.Nhibernate.Entities.ScopeClaim>(MemberList.Source);
+
                 config.CreateMap<Models.Secret, ScopeSecret>(MemberList.Source);
 
                 config.CreateMap<Models.Secret, ClientSecret>(MemberList.Source);
+
                 config.CreateMap<Models.Client, Contrib.Nhibernate.Entities.Client>(MemberList.Source)
                     .ForMember(x => x.UpdateAccessTokenOnRefresh,
                         opt => opt.MapFrom(src => src.UpdateAccessTokenClaimsOnRefresh))
