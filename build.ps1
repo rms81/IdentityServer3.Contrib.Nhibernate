@@ -17,6 +17,17 @@ if(Test-Path Env:\APPVEYOR_BUILD_NUMBER){
 	$task = "appVeyor"
 }
 
+if(Test-Path env:BuildRunner) {
+        $buildRunner = Get-Content env:BuildRunner
+
+		if($buildRunner -eq "myget") {
+			$buildNumber = [int]$Env:BuildCounter
+			Write-Host "Using MYGET_BUILD_NUMBER"
+
+			$task = "myGet"
+		}
+}
+
 "Build number $buildNumber"
 
 Invoke-Psake .\default.ps1 $task -properties @{ buildNumber=$buildNumber; preRelease=$preRelease }
