@@ -11,7 +11,6 @@ Just use the extension method RegisterNhibernateStores with an Nhibernate Sessio
        RegisterConfigurationServices = true
     });
 
-
 A way of getting the SessionFactory. Use MappingHelper.GetNhibernateServicesMappings() to get the mappings.
 
     private static ISessionFactory GetNHibernateSessionFactory()
@@ -32,10 +31,11 @@ A way of getting the SessionFactory. Use MappingHelper.GetNhibernateServicesMapp
             .BuildSessionFactory();
 
         return sessionFactory;
-    
     }
 
-private static void BuildSchema(Configuration cfg)
-{
-    new SchemaUpdate(cfg).Execute(false, true);
-}
+To auto create the tables:
+
+    private static void BuildSchema(Configuration cfg)
+    {
+       new SchemaUpdate(cfg).Execute(false, true);
+    }  
