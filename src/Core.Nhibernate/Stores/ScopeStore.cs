@@ -29,6 +29,7 @@ using IdentityServer3.Contrib.Nhibernate.Entities;
 using IdentityServer3.Core.Services;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace IdentityServer3.Contrib.Nhibernate.Stores
 {
@@ -42,18 +43,17 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var result = ExecuteInTransaction(session =>
-              {
-                  var scopes = GetScopesBaseQueryOver(session);
+            {
+                var scopes = GetScopesBaseQuery(session);
 
-                  var filterScopeNames = scopeNames.ToArray<object>();
+                var filterScopeNames = scopeNames.ToArray<object>();
 
                   if (scopeNames != null && filterScopeNames.Any())
                   {
-                      scopes = scopes
-                          .Where(s => s.Name.IsIn(filterScopeNames));
+                      scopes = scopes.Where(s => filterScopeNames.Contains(s.Name));
                   }
 
-                  var list = scopes.List();
+                  var list = scopes.ToList();
                   return list.Select(s => s.ToModel());
               });
 
@@ -64,8 +64,8 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var result = ExecuteInTransaction(session =>
-              {
-                  var scopes = GetScopesBaseQueryOver(session);
+            {
+                var scopes = GetScopesBaseQuery(session);
 
                   if (publicOnly)
                   {
@@ -73,18 +73,19 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
                            .Where(s => s.ShowInDiscoveryDocument);
                   }
 
-                  var list = scopes.List();
+                  var list = scopes.ToList();
                   return list.Select(s => s.ToModel());
               });
 
             return await Task.FromResult(result);
         }
 
-        private IQueryOver<Scope, Scope> GetScopesBaseQueryOver(ISession session)
+        private IQueryable<Scope> GetScopesBaseQuery(ISession session)
         {
-            return session.QueryOver<Scope>()
-                .Fetch(s => s.ScopeClaims).Eager
-                .Fetch(s => s.ScopeSecrets).Eager;
+            return session.Query<Scope>()
+                .Fetch(s => s.ScopeClaims)
+                .Fetch(s => s.ScopeSecrets)
+                .AsQueryable();
         }
     }
 }

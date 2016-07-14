@@ -32,6 +32,7 @@ using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using Newtonsoft.Json;
 using NHibernate;
+using NHibernate.Linq;
 using Token = IdentityServer3.Contrib.Nhibernate.Entities.Token;
 
 namespace IdentityServer3.Contrib.Nhibernate.Stores
@@ -77,9 +78,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             var toReturn = ExecuteInTransaction(session =>
             {
-                var token = session.QueryOver<Token>()
-                    .Where(t => t.Key == key && t.TokenType == TokenType)
-                    .SingleOrDefault();
+                var token = session
+                    .Query<Token>()
+                    .SingleOrDefault(t => t.Key == key && t.TokenType == TokenType);
 
                 return (token == null || token.Expiry < DateTimeOffset.UtcNow)
                     ? null
@@ -92,14 +93,12 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             ExecuteInTransaction(session =>
             {
-                //TODO HQL
-                var token = session.QueryOver<Token>()
-                    .Where(t => t.Key == key && t.TokenType == TokenType)
-                    .SingleOrDefault();
-
-                if (token == null) return;
-
-                session.Delete(token);
+                session.CreateQuery($"DELETE {nameof(Token)} t " +
+                                    $"WHERE t.{nameof(Token.Key)} = :key " +
+                                    $"and t.{nameof(Token.TokenType)} = :tokenType")
+                    .SetParameter("key", key)
+                    .SetParameter("tokenType", TokenType)
+                    .ExecuteUpdate();
             });
 
             await TaskExtensions.CompletedTask;
@@ -109,11 +108,11 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             var toReturn = ExecuteInTransaction(session =>
               {
-                  var tokens = session.QueryOver<Token>()
+                  var tokens = session.Query<Token>()
                       .Where(t => t.SubjectId == subjectId && t.TokenType == TokenType)
-                      .List();
+                      .ToList();
 
-                  if (tokens == null || !tokens.Any()) return new List<ITokenMetadata>();
+                  if (!tokens.Any()) return new List<ITokenMetadata>();
 
                   var results = tokens.Select(x => ConvertFromJson(x.JsonCode)).ToArray();
                   return results.Cast<ITokenMetadata>();

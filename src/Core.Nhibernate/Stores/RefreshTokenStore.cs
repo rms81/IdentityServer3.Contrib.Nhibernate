@@ -22,11 +22,13 @@
 */
 
 
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer3.Contrib.Nhibernate.Enums;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using NHibernate;
+using NHibernate.Linq;
 using Token = IdentityServer3.Contrib.Nhibernate.Entities.Token;
 
 namespace IdentityServer3.Contrib.Nhibernate.Stores
@@ -43,9 +45,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             ExecuteInTransaction(session =>
             {
-                var token = session.QueryOver<Token>()
-                       .Where(t => t.Key == key && t.TokenType == TokenType)
-                       .SingleOrDefault();
+                var token = session
+                       .Query<Token>()
+                       .SingleOrDefault(t => t.Key == key && t.TokenType == TokenType);
 
                 if (token == null)
                 {

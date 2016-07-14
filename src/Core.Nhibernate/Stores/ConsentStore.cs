@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using IdentityServer3.Contrib.Nhibernate.Entities;
 using IdentityServer3.Core.Services;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace IdentityServer3.Contrib.Nhibernate.Stores
 {
@@ -43,9 +44,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             var result = ExecuteInTransaction(session =>
               {
-                  var item = session.QueryOver<Consent>()
-                             .Where(c => c.Subject == subject && c.ClientId == client)
-                             .SingleOrDefault();
+                  var item = session
+                             .Query<Consent>()
+                             .SingleOrDefault(c => c.Subject == subject && c.ClientId == client);
 
                   return item == null
                       ? null
@@ -64,9 +65,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             ExecuteInTransaction(session =>
             {
-                var item = session.QueryOver<Consent>()
-                        .Where(c => c.Subject == consent.Subject && c.ClientId == consent.ClientId)
-                        .SingleOrDefault();
+                var item = session
+                        .Query<Consent>()
+                        .SingleOrDefault(c => c.Subject == consent.Subject && c.ClientId == consent.ClientId);
 
                 if (item == null)
                 {
@@ -101,9 +102,9 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
         {
             var results = ExecuteInTransaction(session =>
               {
-                  var items = session.QueryOver<Consent>()
+                  var items = session.Query<Consent>()
                          .Where(c => c.Subject == subject)
-                         .List();
+                         .ToList();
 
                   return items.Select(i => new IdentityServer3.Core.Models.Consent
                   {
