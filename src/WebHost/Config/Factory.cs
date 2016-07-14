@@ -79,29 +79,40 @@ namespace WebHost.Config
 
         public static void ConfigureClients(ICollection<Client> clients, ISession nhSession)
         {
-            var clientsInDb = nhSession.Query<IdentityServer3.Contrib.Nhibernate.Entities.Client>();
-
-            if (clientsInDb.Any()) return;
-
-            var toSave = clients.Select(c => c.ToEntity()).ToList();
-
-            foreach (var client in toSave)
+            using (var tx = nhSession.BeginTransaction())
             {
-                var result = nhSession.Save(client);
+                var clientsInDb = nhSession.Query<IdentityServer3.Contrib.Nhibernate.Entities.Client>();
+
+                if (clientsInDb.Any()) return;
+
+                var toSave = clients.Select(c => c.ToEntity()).ToList();
+
+                foreach (var client in toSave)
+                {
+                    var result = nhSession.Save(client);
+                }
+
+                tx.Commit();
             }
+
         }
 
         public static void ConfigureScopes(ICollection<Scope> scopes, ISession nhSession)
         {
-            var scopesInDb = nhSession.Query<IdentityServer3.Contrib.Nhibernate.Entities.Scope>();
-
-            if (scopesInDb.Any()) return;
-
-            var toSave = scopes.Select(s => s.ToEntity()).ToList();
-
-            foreach (var scope in toSave)
+            using (var tx = nhSession.BeginTransaction())
             {
-                var result = nhSession.Save(scope);
+                var scopesInDb = nhSession.Query<IdentityServer3.Contrib.Nhibernate.Entities.Scope>();
+
+                if (scopesInDb.Any()) return;
+
+                var toSave = scopes.Select(s => s.ToEntity()).ToList();
+
+                foreach (var scope in toSave)
+                {
+                    var result = nhSession.Save(scope);
+                }
+
+                tx.Commit();
             }
         }
     }
