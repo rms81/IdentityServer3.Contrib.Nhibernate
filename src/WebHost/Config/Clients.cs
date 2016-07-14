@@ -457,6 +457,31 @@ namespace WebHost.Config
 
                     AccessTokenType = AccessTokenType.Reference
                 },
+                  /////////////////////////////////////////////////////////////
+                // Postman Client
+                /////////////////////////////////////////////////////////////
+                new Client
+                {
+                    ClientName = "Postman Client",
+                    ClientId = "postman",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    Flow = Flows.AuthorizationCode,
+
+                    RedirectUris = new List<string>
+                    {
+                        "https://www.getpostman.com/oauth2/callback"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                        "openid", "profile", "write"
+                    },
+
+                    AccessTokenType = AccessTokenType.Reference
+                },
             };
         }
     }
