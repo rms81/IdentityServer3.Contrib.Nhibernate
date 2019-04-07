@@ -49,7 +49,7 @@ namespace IdentityServer3.Contrib.Nhibernate.Stores
                     SubjectId = value.SubjectId,
                     ClientId = value.ClientId,
                     JsonCode = ConvertToJson(value),
-                    Expiry = DateTime.UtcNow.AddSeconds(value.Client.AuthorizationCodeLifetime),
+                    Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime),
                     TokenType = this.TokenType
                 };
 
